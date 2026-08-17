@@ -43,6 +43,8 @@ class StudentMemory:
 
         return join_nonempty([context_block, fact_text], sep="\n\n")
 
+
+
     def retrieve_episodic(self, user_id: str, query: str) -> str:
         # LAB TODO 2/4
         # Use client.graph.search(user_id=..., query=cap_query(query),
