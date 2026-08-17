@@ -14,6 +14,6 @@
   - **Case E08 (Recency & Scope Conflict)**: Ràng buộc công nghệ của dự án `BLUEBIRD-42` (`TypeScript`, `NestJS`) được ưu tiên hơn preference cá nhân (`Python`), thể hiện đúng quy tắc Scope-specific Conflict.
   - **Case E10 (Short-term Compaction)**: Chiến lược `sliding` trích xuất constraint `REVIEW-DEADLINE-1600` vào `<DURABLE_NOTES>`, giúp thông tin bền vững ngay cả khi raw turns bị evict.
 
-## 3. Hoàn Thành Mở Rộng (Bonus Track)
-- **Golden Set (G01–G20)**: Sinh `golden_benchmark.json` và `.md` chấm điểm tự động.
-- **Mini-Product Streamlit UI**: Hoàn thiện `retrieve_for_case` hỗ trợ load case, hiển thị 4 layer evidence và chat với Gemini.
+## 3. Tổng Hợp Công Việc & Bài Học Bài Lab
+- **Đã Hoàn Thành**: 4 LAB TODOs trong `src/memory_student.py`, Privacy Drill (`forget` & `verify-only`), 4 ảnh audit trong `submission/`, Golden Set (`reports/golden_benchmark.md`) và Mini-Product Streamlit UI (`src/demo_ui.py`).
+- **Lưu Ý Kỹ Thuật**: Dùng `scope="episodes"` cho semantic search để giữ nguyên mã literal (`PAYMENT-RULE-3`); dùng `user_id` cách ly cho long-term/episodic; chờ async indexing hoàn tất trước khi query.
