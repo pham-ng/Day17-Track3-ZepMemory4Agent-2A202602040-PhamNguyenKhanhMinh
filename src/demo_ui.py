@@ -89,26 +89,79 @@ def retrieve_for_case(
     case: dict[str, Any],
     extra_messages: list[dict[str, str]],
 ) -> dict[str, Any]:
-    """BONUS TODO: run student retrieval for the loaded case.
+    user_id = case.get("user_id", "minh-lab17")
+    thread_id = case.get("thread_id", "minh-s1")
+    query = case.get("query", "")
+    expected_layer = case.get("expected_layer", "short_term")
+    retrieve_layers = case.get("retrieve_layers", [])
 
-    Return a dict with keys:
-      - "merged_context": str  (StudentMemory.assemble_context output)
-      - "layers": dict[str, str]  (per-layer evidence: short_term/long_term/
-                                   episodic/semantic)
-      - "budget": dict  (the breakdown from assemble_context)
+    # 1. Build Short-Term Memory
+    messages = list(case.get("fixture_messages") or [])
+    if not messages:
+        dataset = load_dataset()
+        for sess in dataset.get("sessions", []):
+            if sess.get("user_id") == user_id and sess.get("thread_id") == thread_id:
+                messages = list(sess.get("messages", []))
+                break
 
-    Hints:
-      * Build short_term from case["fixture_messages"] if present, else from
-        the matching user/thread messages in data/sessions.json, plus
-        extra_messages. E01 has no fixture — it uses thread minh-s1.
-      * Decide which durable layers to fetch from case["expected_layer"] (or
-        case["retrieve_layers"] for "mixed"), then call
-        memory.retrieve_long_term / retrieve_episodic / retrieve_semantic.
-      * Keep user_id and thread_id from the loaded case.
-      * Finish with memory.assemble_context(layers).
-    """
-    _ = (memory, case, extra_messages, settings, ShortTermMemory)
-    raise NotImplementedError("BONUS TODO: run student retrieval for the loaded case")
+    if extra_messages:
+        messages.extend(extra_messages)
+
+    st_mem = ShortTermMemory(strategy="sliding")
+    for msg in messages:
+        st_mem.add(msg.get("role", "user"), msg.get("content", ""))
+
+    short_term_text = st_mem.get_context()
+
+    # 2. Determine durable layers to retrieve
+    needed_layers = set()
+    if expected_layer == "mixed":
+        if retrieve_layers:
+            needed_layers.update(retrieve_layers)
+        else:
+            needed_layers.update(["long_term", "semantic"])
+    elif expected_layer in ("short_term", "long_term", "episodic", "semantic"):
+        needed_layers.add(expected_layer)
+    else:
+        needed_layers.add("short_term")
+
+    long_term_text = ""
+    if "long_term" in needed_layers:
+        try:
+            long_term_text = memory.retrieve_long_term(user_id=user_id, thread_id=thread_id, query=query)
+        except Exception:
+            long_term_text = ""
+
+    episodic_text = ""
+    if "episodic" in needed_layers:
+        try:
+            episodic_text = memory.retrieve_episodic(user_id=user_id, query=query)
+        except Exception:
+            episodic_text = ""
+
+    semantic_text = ""
+    if "semantic" in needed_layers:
+        try:
+            graph_id = case.get("graph_id") or settings.zep_semantic_graph_id
+            semantic_text = memory.retrieve_semantic(graph_id=graph_id, query=query)
+        except Exception:
+            semantic_text = ""
+
+    layers = {
+        "short_term": short_term_text,
+        "long_term": long_term_text,
+        "episodic": episodic_text,
+        "semantic": semantic_text,
+    }
+
+    merged_context, budget = memory.assemble_context(layers)
+
+    return {
+        "merged_context": merged_context,
+        "layers": layers,
+        "budget": budget,
+    }
+
 
 
 def main() -> None:
