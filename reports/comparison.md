@@ -2,10 +2,10 @@
 
 | Metric | Memory-enabled | No-memory | Delta |
 | --- | ---: | ---: | ---: |
-| Evidence hit rate | 72.7% | 18.2% | +54.5% |
-| Passed cases | 8/11 | 2/11 | +6 |
-| Avg retrieval latency (ms) | 1348.8 | 0.0 | +1348.8 |
-| Avg token reduction | 22.4% | 81.8% | -59.4% |
+| Evidence hit rate | 63.6% | 18.2% | +45.5% |
+| Passed cases | 7/11 | 2/11 | +5 |
+| Avg retrieval latency (ms) | 1528.3 | 0.0 | +1528.3 |
+| Avg token reduction | 27.7% | 81.8% | -54.2% |
 
 ## Interpretation
 

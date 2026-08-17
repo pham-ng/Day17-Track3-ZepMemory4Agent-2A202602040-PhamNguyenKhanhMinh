@@ -60,9 +60,6 @@ class StudentMemory:
 
     def retrieve_semantic(self, graph_id: str, query: str) -> str:
         # LAB TODO 3/4
-        # Search the standalone graph (graph_id, NOT user_id).
-        # Recommended: scope="episodes" — it returns raw document text that keeps
-        # literal markers (e.g. PAYMENT-RULE-3). The "auto" scope returns
         # extracted facts that DROP those literal codes, so avoid it here.
         # Fallback: scope="nodes".
         q = cap_query(query)

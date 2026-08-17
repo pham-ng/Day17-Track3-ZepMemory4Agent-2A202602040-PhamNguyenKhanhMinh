@@ -3,24 +3,24 @@
 - Implementation: `student`
 - Kind: `practice`
 - Cases: **11**
-- Passed: **8/11**
-- Evidence hit rate: **72.7%**
-- Average retrieval latency: **1348.8 ms**
-- Average token reduction vs full source context: **22.4%**
+- Passed: **7/11**
+- Evidence hit rate: **63.6%**
+- Average retrieval latency: **1528.3 ms**
+- Average token reduction vs full source context: **27.7%**
 
 | Case | Layer | Pass | Latency ms | Retrieved tokens | Token reduction | Missing / Error |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| E01 | short_term | PASS | 0.0 | 133 | 0.0% |  |
-| E06 | semantic | PASS | 2576.0 | 148 | 67.8% |  |
-| E09 | long_term | PASS | 2072.4 | 814 | 0.0% |  |
-| E10 | short_term | PASS | 0.4 | 195 | 0.0% |  |
-| E02 | long_term | PASS | 2506.3 | 1102 | 0.0% |  |
-| E03 | long_term | PASS | 2300.8 | 1102 | 0.0% |  |
-| E04 | episodic | FAIL | 224.5 | 121 | 45.2% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
-| E05 | episodic | FAIL | 207.8 | 121 | 45.2% | missing=connection churn, timeout threshold |
-| E07 | mixed | PASS | 2474.7 | 485 | 14.2% |  |
-| E11 | semantic | PASS | 406.2 | 146 | 74.2% |  |
-| E08 | long_term | FAIL | 2067.3 | 1113 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
+| E01 | short_term | PASS | 0.1 | 133 | 0.0% |  |
+| E06 | semantic | PASS | 2492.2 | 148 | 67.8% |  |
+| E09 | long_term | PASS | 2559.8 | 814 | 0.0% |  |
+| E10 | short_term | PASS | 0.2 | 195 | 0.0% |  |
+| E02 | long_term | PASS | 2946.3 | 778 | 0.0% |  |
+| E03 | long_term | FAIL | 2470.9 | 768 | 0.0% | missing=benchmark report, 16:00 |
+| E04 | episodic | FAIL | 455.3 | 68 | 69.2% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
+| E05 | episodic | FAIL | 297.6 | 68 | 69.2% | missing=connection churn, timeout threshold |
+| E07 | mixed | PASS | 2704.5 | 485 | 14.2% |  |
+| E11 | semantic | PASS | 254.3 | 91 | 83.9% |  |
+| E08 | long_term | FAIL | 2629.8 | 768 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
 
 ## Evidence excerpts
 
@@ -42,28 +42,28 @@
 
 ### E02 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Pyt`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:20     Source: message     Content: Lab Assistant (assistant): Da hieu: demo ca nhan ORCHID-27, uu ti`
 
 ### E03 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:04:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: TODO: hoan thanh benchmark report truoc thu Sau luc 1`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.   - Created At: 2026-08-01 09:00:20     Source: message     Content: Lab Assistant (assistant): Da hieu: demo ca nhan ORCHID-27, uu tien Py`
 
 ### E04 - episodic
 
-`EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. metadata= EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata= EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600. metadata=`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata=`
 
 ### E05 - episodic
 
-`EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. metadata= EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata= EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600. metadata=`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata=`
 
 ### E07 - mixed
 
-`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. T`
+`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:20     Source: message     Content: Lab Assistant (assistant): Da hieu: demo ca nhan ORCH`
 
 ### E11 - semantic
 
-`EPISODE: {"id":"kb-async-http","entity":"Async HTTP Incident Playbook","summary":"When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST.","source":"incident-playbook-2026","updated_at":"2026-08-11T00:00:00Z"} metadata= EPISODE: When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST. metadata=`
+`EPISODE: {"id":"kb-async-http","entity":"Async HTTP Incident Playbook","summary":"When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST.","source":"incident-playbook-2026","updated_at":"2026-08-11T00:00:00Z"} metadata=`
 
 ### E08 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Ta`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:20     Source: message     Content: Lab Assistant (assistant): Da hieu: demo ca nhan ORCHID-27, uu tien Python, tranh Java, vi du ngan.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi gia`
