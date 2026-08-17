@@ -5,22 +5,22 @@
 - Cases: **11**
 - Passed: **8/11**
 - Evidence hit rate: **72.7%**
-- Average retrieval latency: **1263.7 ms**
-- Average token reduction vs full source context: **23.2%**
+- Average retrieval latency: **1281.2 ms**
+- Average token reduction vs full source context: **22.5%**
 
 | Case | Layer | Pass | Latency ms | Retrieved tokens | Token reduction | Missing / Error |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| E01 | short_term | PASS | 0.0 | 133 | 0.0% |  |
-| E06 | semantic | PASS | 2330.1 | 148 | 67.8% |  |
-| E09 | long_term | PASS | 2336.9 | 814 | 0.0% |  |
-| E10 | short_term | PASS | 0.3 | 195 | 0.0% |  |
-| E02 | long_term | PASS | 2118.6 | 1205 | 0.0% |  |
-| E03 | long_term | PASS | 2101.0 | 1202 | 0.0% |  |
-| E04 | episodic | FAIL | 215.6 | 111 | 49.8% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
-| E05 | episodic | FAIL | 207.5 | 111 | 49.8% | missing=connection churn, timeout threshold |
-| E07 | mixed | PASS | 2302.4 | 485 | 14.2% |  |
-| E11 | semantic | PASS | 208.5 | 146 | 74.2% |  |
-| E08 | long_term | FAIL | 2079.6 | 1198 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
+| E01 | short_term | PASS | 0.1 | 133 | 0.0% |  |
+| E06 | semantic | PASS | 2712.8 | 148 | 67.8% |  |
+| E09 | long_term | PASS | 2090.5 | 814 | 0.0% |  |
+| E10 | short_term | PASS | 0.2 | 195 | 0.0% |  |
+| E02 | long_term | PASS | 2115.1 | 1205 | 0.0% |  |
+| E03 | long_term | PASS | 2069.8 | 1202 | 0.0% |  |
+| E04 | episodic | FAIL | 209.3 | 111 | 49.8% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
+| E05 | episodic | FAIL | 202.8 | 130 | 41.2% | missing=connection churn, timeout threshold |
+| E07 | mixed | PASS | 2400.5 | 485 | 14.2% |  |
+| E11 | semantic | PASS | 203.1 | 146 | 74.2% |  |
+| E08 | long_term | FAIL | 2089.3 | 1198 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
 
 ## Evidence excerpts
 
@@ -54,7 +54,7 @@
 
 ### E05 - episodic
 
-`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600.`
+`EPISODE: Hay kiem tra connection pool, lifecycle cua client va concurrency. EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600.`
 
 ### E07 - mixed
 
