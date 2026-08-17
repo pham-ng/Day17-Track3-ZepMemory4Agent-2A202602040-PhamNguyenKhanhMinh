@@ -39,8 +39,16 @@ def ensure_user(client: Zep, user: dict[str, Any], reset: bool = False) -> None:
 
 
 def recreate_thread(client: Zep, thread_id: str, user_id: str) -> None:
-    safe_call(client.thread.delete, thread_id=thread_id)
-    client.thread.create(thread_id=thread_id, user_id=user_id)
+    try:
+        client.thread.delete(thread_id=thread_id)
+        time.sleep(1)
+    except Exception:
+        pass
+    try:
+        client.thread.create(thread_id=thread_id, user_id=user_id)
+    except Exception:
+        pass
+
 
 
 def add_messages(client: Zep, thread_id: str, raw_messages: list[dict[str, Any]]) -> None:

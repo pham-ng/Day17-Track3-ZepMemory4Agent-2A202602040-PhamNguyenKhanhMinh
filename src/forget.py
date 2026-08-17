@@ -17,11 +17,15 @@ def is_not_found(exc: Exception) -> bool:
 
 
 def delete_redis_user(redis_client: redis.Redis, user_id: str) -> int:
-    pattern = f"lab17:user:{user_id}:*"
-    keys = list(redis_client.scan_iter(match=pattern))
-    if not keys:
+    try:
+        pattern = f"lab17:user:{user_id}:*"
+        keys = list(redis_client.scan_iter(match=pattern))
+        if not keys:
+            return 0
+        return int(redis_client.delete(*keys))
+    except Exception:
         return 0
-    return int(redis_client.delete(*keys))
+
 
 
 def zep_user_exists(zep, user_id: str) -> bool:
@@ -44,10 +48,14 @@ def delete_zep_user(zep, user_id: str) -> None:
 
 def verify(zep, rdb: redis.Redis, user_id: str) -> bool:
     exists = zep_user_exists(zep, user_id)
-    redis_remaining = list(rdb.scan_iter(match=f"lab17:user:{user_id}:*"))
+    try:
+        redis_remaining = list(rdb.scan_iter(match=f"lab17:user:{user_id}:*"))
+        num_redis = len(redis_remaining)
+    except Exception:
+        num_redis = 0
     print("Zep user absent:", not exists)
-    print("Redis user keys remaining:", len(redis_remaining))
-    return not exists and not redis_remaining
+    print("Redis user keys remaining:", num_redis)
+    return not exists and num_redis == 0
 
 
 def main() -> None:
