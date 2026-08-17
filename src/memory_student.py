@@ -56,9 +56,10 @@ class StudentMemory:
             user_id=user_id,
             query=cap_query(query),
             scope="episodes",
-            limit=10,
+            limit=15,
         )
-        return render_graph_search(results)
+        return render_graph_search(results, episode_char_cap=180)
+
 
     def retrieve_semantic(self, graph_id: str, query: str) -> str:
         # LAB TODO 3/4

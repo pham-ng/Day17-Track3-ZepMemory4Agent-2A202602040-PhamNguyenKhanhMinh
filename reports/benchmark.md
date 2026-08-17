@@ -5,22 +5,22 @@
 - Cases: **11**
 - Passed: **7/11**
 - Evidence hit rate: **63.6%**
-- Average retrieval latency: **1434.5 ms**
-- Average token reduction vs full source context: **26.8%**
+- Average retrieval latency: **1481.2 ms**
+- Average token reduction vs full source context: **27.2%**
 
 | Case | Layer | Pass | Latency ms | Retrieved tokens | Token reduction | Missing / Error |
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | E01 | short_term | PASS | 0.0 | 133 | 0.0% |  |
-| E06 | semantic | PASS | 2478.4 | 148 | 67.8% |  |
-| E09 | long_term | PASS | 2787.3 | 814 | 0.0% |  |
-| E10 | short_term | PASS | 0.3 | 195 | 0.0% |  |
-| E02 | long_term | PASS | 2335.9 | 939 | 0.0% |  |
-| E03 | long_term | FAIL | 2361.8 | 946 | 0.0% | missing=benchmark report, 16:00 |
-| E04 | episodic | FAIL | 262.1 | 68 | 69.2% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
-| E05 | episodic | FAIL | 272.1 | 68 | 69.2% | missing=connection churn, timeout threshold |
-| E07 | mixed | PASS | 2653.8 | 485 | 14.2% |  |
-| E11 | semantic | PASS | 271.2 | 146 | 74.2% |  |
-| E08 | long_term | FAIL | 2356.4 | 917 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
+| E06 | semantic | PASS | 2475.2 | 148 | 67.8% |  |
+| E09 | long_term | PASS | 2398.8 | 814 | 0.0% |  |
+| E10 | short_term | PASS | 0.2 | 195 | 0.0% |  |
+| E02 | long_term | PASS | 2735.4 | 980 | 0.0% |  |
+| E03 | long_term | FAIL | 2412.5 | 964 | 0.0% | missing=benchmark report, 16:00 |
+| E04 | episodic | FAIL | 714.7 | 63 | 71.5% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
+| E05 | episodic | FAIL | 258.9 | 63 | 71.5% | missing=connection churn, timeout threshold |
+| E07 | mixed | PASS | 2646.0 | 485 | 14.2% |  |
+| E11 | semantic | PASS | 263.9 | 146 | 74.2% |  |
+| E08 | long_term | FAIL | 2387.3 | 975 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
 
 ## Evidence excerpts
 
@@ -42,28 +42,28 @@
 
 ### E02 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. When explaining async/await and coroutines vs. Tasks, use a timeline. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:20     Source: message     Cont`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:20     Source`
 
 ### E03 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. When explaining async/await and coroutines vs. Tasks, use a timeline. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.   - Created At: 2026-08-01 09:00:20     Source: message     Content: `
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.   - Created At: 2026-08-01 09:00:20     Source: mes`
 
 ### E04 - episodic
 
-`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata=`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.`
 
 ### E05 - episodic
 
-`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. metadata= EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. metadata=`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.`
 
 ### E07 - mixed
 
-`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. When explaining async/await and coroutines vs. Tasks, use a timeline. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:20     Source: mess`
+`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan.   - Created At: 2026-08-01 09:00:2`
 
 ### E11 - semantic
 
-`EPISODE: When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST. metadata= EPISODE: {"id":"kb-async-http","entity":"Async HTTP Incident Playbook","summary":"When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST.","source":"incident-playbook-2026","updated_at":"2026-08-11T00:00:00Z"} metadata=`
+`EPISODE: {"id":"kb-async-http","entity":"Async HTTP Incident Playbook","summary":"When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST.","source":"incident-playbook-2026","updated_at":"2026-08-11T00:00:00Z"} metadata= EPISODE: When async HTTP calls time out, inspect connection pooling, downstream saturation and concurrency before increasing timeout. Reuse a long-lived client session where possible. Marker: CONN-POOL-FIRST. metadata=`
 
 ### E08 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining code, use short examples. When explaining async/await and coroutines vs. Tasks, use a timeline. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.   - Created At: 2026-08-01 09:00:20     Source: message     Content: `
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline.   - Created At: 2026-08-01 09:00:20     Source: mes`
