@@ -63,6 +63,9 @@ class StudentMemory:
 
     def retrieve_semantic(self, graph_id: str, query: str) -> str:
         # LAB TODO 3/4
+        # Search the standalone graph (graph_id, NOT user_id).
+        # Recommended: scope="episodes" — it returns raw document text that keeps
+        # literal markers (e.g. PAYMENT-RULE-3). The "auto" scope returns
         # extracted facts that DROP those literal codes, so avoid it here.
         # Fallback: scope="nodes".
         q = cap_query(query)
@@ -73,14 +76,23 @@ class StudentMemory:
                 scope="episodes",
                 limit=8,
             )
+            rendered = render_graph_search(results)
+            if rendered:
+                return rendered
         except Exception:
+            pass
+
+        try:
             results = self.client.graph.search(
                 graph_id=graph_id,
                 query=q,
                 scope="nodes",
                 limit=8,
             )
-        return render_graph_search(results)
+            return render_graph_search(results)
+        except Exception:
+            return ""
+
 
     def assemble_context(self, layers: dict[str, str]) -> tuple[str, dict[str, dict[str, int]]]:
         # LAB TODO 4/4
