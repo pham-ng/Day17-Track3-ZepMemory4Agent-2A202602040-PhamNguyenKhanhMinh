@@ -1,32 +1,32 @@
 # Báo Cáo Thu Hoạch Lab 17: Multi-Memory Agent với Zep Cloud V3
 
-## 1. Trả Lời Câu Hỏi Suy Ngẫm (Reflection)
+## 1. Reflection
 
-1. **Vì sao `short_term` không bị ảnh hưởng bởi việc xóa durable memory?**
-   `short_term` memory quản lý cửa sổ hội thoại gần nhất nằm trực tiếp trong bộ nhớ tạm thời của thread hiện tại (`recent_messages`). Khi xóa durable memory (dữ liệu người dùng trên Zep Cloud/Redis), các tin nhắn trong phiên hội thoại ngắn hạn chưa đẩy vào durable graph hoặc vẫn được giữ trực tiếp trong context window của LLM nên Agent vẫn truy cập bình thường.
+1. **Vì sao `short_term` không bị ảnh hưởng khi xóa durable memory?**
+   `short_term` memory lưu ở `recent_messages`. Khi xóa durable memory trên cloud, tin nhắn ngắn hạn chưa bị nén vẫn tồn tại trong context window nên Agent vẫn truy cập bình thường.
 
 2. **Vì sao `episodic` và `semantic` cần hai chiến lược retrieval khác nhau?**
-   - `episodic` lưu trữ các sự kiện, trải nghiệm cá nhân nối tiếp theo thời gian của từng `user_id`. Cần tìm kiếm theo phạm vi `episodes` trên user graph để tái hiện ngữ cảnh sự cố/lịch sử cá nhân.
-   - `semantic` lưu trữ tri thức miền chung (domain/incident playbooks, rules) áp dụng cho mọi người dùng. Cần tìm kiếm trên độc lập `graph_id` (`vinuni-lab17-domain-kb`) theo phạm vi `episodes`/`nodes` để tra cứu quy trình chuẩn.
+   - `episodic`: Lưu sự kiện cá nhân theo thời gian của từng `user_id`, cần truy vấn scope `episodes` trên user graph.
+   - `semantic`: Lưu tri thức miền chung (incident playbooks, rules) cho mọi người dùng, cần truy vấn scope `episodes`/`nodes` trên standalone `graph_id` (`vinuni-lab17-domain-kb`).
 
-3. **Trade-off lớn nhất giữa context budget và latency/cost là gì?**
-   Tăng context budget giúp tăng độ bao phủ thông tin (hit rate cao hơn), nhưng làm tăng số lượng token đầu vào làm tăng chi phí API (cost) và thời gian xử lý phản hồi (latency). Ngược lại, nén budget quá mức làm giảm latency/cost nhưng dễ gây trôi mất thông tin quan trọng.
+3. **Trade-off giữa context budget và latency/cost?**
+   Tăng budget giúp tăng hit rate nhưng làm tăng token, chi phí API và độ trễ (latency). Giảm budget tiết kiệm chi phí nhưng dễ bỏ sót thông tin.
 
-## 2. Phân Tích Kết Quả Benchmark
+4. **Short-term Compaction & lý do Buffer không bền vững?**
+   Chiến lược `buffer` giữ toàn bộ lịch sử khiến token bùng nổ. `sliding` kết hợp `extract_durable_notes` chủ động trích xuất các constraint (như `REVIEW-DEADLINE-1600`) vào `<DURABLE_NOTES>`, giúp giữ thông tin ngay cả khi lượt thoại thô bị evict.
 
-### Kết Quả So Sánh (`student` vs `no_memory`)
+## 2. Benchmark Analysis
 
-| Metric | Memory-enabled (Student) | No-memory Baseline | Chênh lệch (Delta) |
+### So Sánh (`student` vs `no_memory`)
+
+| Metric | Student (Memory) | No-memory Baseline | Delta |
 | --- | ---: | ---: | ---: |
 | **Evidence Hit Rate** | **72.7%** (8/11) | **18.2%** (2/11) | **+54.5%** |
 | **Số ca Pass** | **8/11** | **2/11** | **+6 ca** |
-| **Thời gian phản hồi TB (Latency)** | 1348.8 ms | 0.0 ms | +1348.8 ms |
-| **Tỷ lệ giảm Token (Token Reduction)** | 22.4% | 81.8% | -59.4% |
+| **Latency TB** | 1348.8 ms | 0.0 ms | +1348.8 ms |
+| **Giảm Token** | 22.4% | 81.8% | -59.4% |
 
 ### Phân Tích Chi Tiết
-- **Ca Pass (`student`)**:
-  - `short_term` (E01, E10): Đạt 100% nhờ lấy trực tiếp `recent_messages`.
-  - `semantic` (E06, E11): Đạt 100% nhờ truy vấn chính xác tri thức miền từ standalone graph `vinuni-lab17-domain-kb`.
-  - `long_term` & `mixed` (E02, E03, E07, E09): Đạt kết quả xuất sắc nhờ sự phối hợp giữa `user_context` (Context Block) và fact edges.
-- **Ca Fail (E04, E05, E08)**: Các ca đòi hỏi truy vết chi tiết mã lỗi phức tạp trùng với thời điểm Zep Cloud V3 async graph indexer chưa hoàn tất trích xuất thực thể.
-- **Privacy Drill**: Xác nhận `python -m src.forget --user-id minh-lab17` xóa sạch dữ liệu cá nhân (`Zep user absent: True`), trong khi tri thức chung `vinuni-lab17-domain-kb` được bảo vệ nguyên vẹn.
+- **Ca Pass**: `short_term` (E01, E10) và `semantic` (E06, E11) đạt 100%. `long_term` và `mixed` (E02, E03, E07, E09) đạt nhờ trích xuất `user_context` và fact edges từ Zep.
+- **Ca Fail (E04, E05, E08)**: Do Zep Cloud V3 async graph indexer chưa kịp trích xuất đầy đủ entity graph tại thời điểm truy vấn.
+- **Privacy Drill**: Lệnh `python -m src.forget --user-id minh-lab17` xóa sạch dữ liệu cá nhân (`Zep user absent: True`), giữ nguyên vẹn tri thức miền chung `vinuni-lab17-domain-kb`.
