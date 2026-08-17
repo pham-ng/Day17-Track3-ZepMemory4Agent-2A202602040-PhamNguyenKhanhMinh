@@ -5,22 +5,22 @@
 - Cases: **11**
 - Passed: **8/11**
 - Evidence hit rate: **72.7%**
-- Average retrieval latency: **1281.2 ms**
-- Average token reduction vs full source context: **22.5%**
+- Average retrieval latency: **1431.7 ms**
+- Average token reduction vs full source context: **23.2%**
 
 | Case | Layer | Pass | Latency ms | Retrieved tokens | Token reduction | Missing / Error |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| E01 | short_term | PASS | 0.1 | 133 | 0.0% |  |
-| E06 | semantic | PASS | 2712.8 | 148 | 67.8% |  |
-| E09 | long_term | PASS | 2090.5 | 814 | 0.0% |  |
+| E01 | short_term | PASS | 0.0 | 133 | 0.0% |  |
+| E06 | semantic | PASS | 2465.1 | 148 | 67.8% |  |
+| E09 | long_term | PASS | 2339.6 | 843 | 0.0% |  |
 | E10 | short_term | PASS | 0.2 | 195 | 0.0% |  |
-| E02 | long_term | PASS | 2115.1 | 1205 | 0.0% |  |
-| E03 | long_term | PASS | 2069.8 | 1202 | 0.0% |  |
-| E04 | episodic | FAIL | 209.3 | 111 | 49.8% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
-| E05 | episodic | FAIL | 202.8 | 130 | 41.2% | missing=connection churn, timeout threshold |
-| E07 | mixed | PASS | 2400.5 | 485 | 14.2% |  |
-| E11 | semantic | PASS | 203.1 | 146 | 74.2% |  |
-| E08 | long_term | FAIL | 2089.3 | 1198 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
+| E02 | long_term | PASS | 2743.9 | 1102 | 0.0% |  |
+| E03 | long_term | PASS | 2361.5 | 1102 | 0.0% |  |
+| E04 | episodic | FAIL | 277.9 | 111 | 49.8% | missing=ClientSession, concurrency=20, ASYNC-FIX-20 |
+| E05 | episodic | FAIL | 270.9 | 111 | 49.8% | missing=connection churn, timeout threshold |
+| E07 | mixed | PASS | 2654.3 | 485 | 14.2% |  |
+| E11 | semantic | PASS | 258.0 | 146 | 74.2% |  |
+| E08 | long_term | FAIL | 2377.4 | 1113 | 0.0% | missing=BLUEBIRD-42, TypeScript, NestJS |
 
 ## Evidence excerpts
 
@@ -42,23 +42,23 @@
 
 ### E02 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600. Minh is currently debugging async HTTP and has tried increasing the timeout to 60s without success.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_nam`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Pyt`
 
 ### E03 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600. Minh is currently debugging async HTTP and has tried increasing the timeout to 60s without success.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:04:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_nam`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:04:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: TODO: hoan thanh benchmark report truoc thu Sau luc 1`
 
 ### E04 - episodic
 
-`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600.`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail.`
 
 ### E05 - episodic
 
-`EPISODE: Hay kiem tra connection pool, lifecycle cua client va concurrency. EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600.`
+`EPISODE: Ten du an ca nhan cua toi la ORCHID-27. Toi thich Python va khong thich Java. Khi giai thich code, hay dung vi du ngan. EPISODE: Toi dang hoc async/await va hay nham coroutine voi Task. Neu sau nay gap chu de nay, hay giai thich bang timeline. EPISODE: TODO: hoan thanh benchmark report truoc thu Sau luc 16:00. Day la open loop LAB-REPORT-1600. EPISODE: Hom nay toi debug async HTTP. Toi da thu tang timeout len 60s nhung van fail.`
 
 ### E07 - mixed
 
-`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600. Minh is currently debugging async HTTP and has tried increasing the timeout to 60s without success.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",`
+`<LONG_TERM> <USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Ten du an ca nhan cua toi la ORCHID-27. T`
 
 ### E11 - semantic
 
@@ -66,4 +66,4 @@
 
 ### E08 - long_term
 
-`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600. Minh is currently debugging async HTTP and has tried increasing the timeout to 60s without success.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-03 10:00:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_nam`
+`<USER_SUMMARY> Minh Nguyen's personal project is named ORCHID-27. Minh has a task to complete a benchmark report before Friday at 16:00, referred to as OPEN LOOP LAB-REPORT-1600.  Minh Nguyen prefers Python and dislikes Java.  When explaining coroutine and Task, the AI will prioritize using a timeline. The AI will use short examples when explaining code. </USER_SUMMARY>  <EPISODES> Episodes are source message or document excerpts shown in selection order.   - Created At: 2026-08-01 09:02:00     Source: message     Content: [user] {   "user_id": "minh-lab17",   "first_name": "Minh",   "last_name": "Nguyen",   "user_alias": "Minh Nguyen" }: Toi dang hoc async/await va hay nham coroutine voi Ta`
